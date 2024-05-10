@@ -44,8 +44,17 @@ def validate_perfect_repeating_sequence(repeating_sequence: List[int], sequence:
         index len(repeating_sequence) are the repeating_sequence.
     '''
     i = 0
+    print("IN validate_perfect_repeating_sequence")
+    print(f"len of sequence: {len(sequence)}")
     while i < len(sequence):
+        print(i)
         if not sequence[i:i+len(repeating_sequence)] == repeating_sequence:
+            print("FAIL1")
+            print(f"sequence[i:i+len(repeating_sequence)]: {sequence[i:i+len(repeating_sequence)]}")
+            print(f"repeating_sequence: {repeating_sequence}")
+            print("CHECK")
+            print(sequence[i-5:i+len(repeating_sequence)+5])
+            print("FAIL2")
             return False
         i=i+len(repeating_sequence)
     return True
@@ -61,6 +70,7 @@ def validate_imperfect_repeating_sequence(repeating_sequence: List[int], sequenc
         repeating sequence: 1,2,3,4
     '''
     remainder = len(sequence) % len(repeating_sequence)
+    print(f"remainder: {remainder}")
     if not validate_perfect_repeating_sequence(repeating_sequence, sequence[:len(sequence)-remainder]):
         return False
     if sequence[-remainder:] == repeating_sequence[:len(sequence[-remainder:])]:
@@ -73,9 +83,12 @@ def validate_repeating_sequence(repeating_sequence: List[int], sequence: List[in
     '''
     Call the correct validation function.
     '''
+    print("HERE in validate_repeating_sequence")
     if len(sequence) % len(repeating_sequence) == 0:
+        print("IN 1")
         return validate_perfect_repeating_sequence(repeating_sequence, sequence)
     else:
+        print("IN 2")
         return validate_imperfect_repeating_sequence(repeating_sequence, sequence)
 
 
@@ -94,6 +107,25 @@ def find_repeating_sequence(sequence: List[int]) -> List[int]:
     '''
     repeating_sequence = [sequence[0]]
     for i, value in enumerate(sequence[1:]):
+        print()
+        print("New")
+        print(i)
+        print(value)
+        if value == repeating_sequence[0]:
+            print("value == repeating_sequence[0]")
+            print(repeating_sequence)
+            print()
+        print(f"sequence[i+1:i+1+len(repeating_sequence)]: {sequence[i+1:i+1+len(repeating_sequence)]}")
+        print(f"repeating_sequence: {repeating_sequence}")
+        print()
+        if sequence[i+1:i+1+len(repeating_sequence)] == repeating_sequence:
+            print("sequence[i+1:i+1+len(repeating_sequence)] == repeating_sequence")
+            print(repeating_sequence)
+            print()
+        if validate_repeating_sequence(repeating_sequence, sequence):
+            print("validate_repeating_sequence(repeating_sequence, sequence)")
+            print(repeating_sequence)
+            print()
         if (
             value == repeating_sequence[0] and
             sequence[i+1:i+1+len(repeating_sequence)] == repeating_sequence and
@@ -108,9 +140,11 @@ def find_repeating_sequence(sequence: List[int]) -> List[int]:
 
 
 def main():
-    print(find_repeating_sequence(sequence=[1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2]))
-    print(find_repeating_sequence(sequence=[1,1,1,2,3,1,2,3]))
-    print(find_repeating_sequence(sequence=[1,2,3,1,2,3,1,2]))
+    sequence = [0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1]
+    # print(find_repeating_sequence(sequence=[1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2]))
+    # print(find_repeating_sequence(sequence=[1,1,1,2,3,1,2,3]))
+    # print(find_repeating_sequence(sequence=[1,2,3,1,2,3,1,2]))
+    print(find_repeating_sequence(sequence=sequence))
 
 
 if __name__ == "__main__":
